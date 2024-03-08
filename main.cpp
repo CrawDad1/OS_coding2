@@ -11,7 +11,7 @@ class Process {
   public:
   vector<int> tickets = vector<int>(0);
   
-
+  // constructors
   Process():tickets({}){
     this->process_id = Process::next_process;
     Process::next_process++;
@@ -21,10 +21,16 @@ class Process {
     this->tickets = new_tickets;
   }
 
+  // access
   int get_pid(){return this->process_id;}
 
+  // functions
   void run(){
     cout << "Process " << this->process_id << " has ran!" << endl;
+  }
+
+  static int get_next_process(){
+    return Process::next_process;
   }
 };
 int Process::next_process = 0;
@@ -35,6 +41,7 @@ private:
   static int next_ticket;
   
 public:
+  const static int MAX_PROCESSES = 10;
   vector<Process*> p_list = {};
   
   // Constructor
@@ -60,7 +67,7 @@ public:
     this->p_list.push_back(p);
   }
 
-  void draw_ticket(){
+  int draw_ticket(){
     // generate a number between 0 and next_ticket - 1
     int num = (rand() % Scheduler::next_ticket);
 
@@ -71,14 +78,14 @@ public:
       for(int tic : p->tickets){
         if (tic == num) {
           p->run();
-          break;
+          return p->get_pid();
         }
       }
     }
+
+    // default
+    return 0;
   }
-  
-  
-  
 };
 int Scheduler::next_ticket = 0;
 
@@ -90,7 +97,6 @@ int main(){
   Scheduler s = Scheduler();
   cout << "Done!" << endl;
 
-
   cout << "\n\nCreating 5 Processes... ";
   s.add_process();
   s.add_process();
@@ -99,17 +105,13 @@ int main(){
   s.add_process();
   cout << "Done!" << endl;
 
-
   cout << "\n\nDrawing 5 Tickets... " << endl;
-
   s.draw_ticket();
   s.draw_ticket();
   s.draw_ticket();
   s.draw_ticket();
   s.draw_ticket();
-
   cout << "DONE!" << endl;
-
   
   return 0;
 }
