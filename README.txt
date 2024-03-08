@@ -1,5 +1,10 @@
 # Operating Systems : Coding Assignment 2
 
+## How to run
+- open a terminal in the same directory as main.cpp
+    - for windows: execute run.bat
+    - for linux: execute run.sh
+
 This is a coding assignment for the Operating Systems course at WSU
 
 This code defines both a Process and Scheduler class, each with a static member to keep track of unique ID's within each class type. 
